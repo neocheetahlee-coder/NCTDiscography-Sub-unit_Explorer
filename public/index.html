@@ -7,7 +7,7 @@
     <style>
         /* ================== ดีไซน์สไตล์ Apple Music ================== */
         :root {
-            --apple-red: #FA243C;
+            --apple-red: #1fd934;
             --bg-color: #FBFBFD;
             --card-bg: #FFFFFF;
             --text-main: #1D1D1F;
@@ -29,12 +29,21 @@
         .tab-btn.active { background: var(--apple-red); color: white; }
 
         .unit-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin: 10px 0 30px; }
-        .unit-card { background: linear-gradient(135deg, #fff3f4 0%, #ffffff 100%); border: 1px solid #F3D6DA; border-radius: 18px; padding: 20px; text-align: left; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 8px 18px rgba(250, 36, 60, 0.06); }
-        .unit-card:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(250, 36, 60, 0.12); }
-        .unit-badge { display: inline-block; background: rgba(250,36,60,0.1); color: var(--apple-red); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; margin-bottom: 12px; }
-        .unit-card h3 { margin: 0 0 10px; font-size: 26px; }
+        .unit-card {
+            background: linear-gradient(135deg, rgba(31, 217, 52, 0.16) 0%, rgba(31, 217, 52, 0.06) 100%);
+            border: 1px solid rgba(31, 217, 52, 0.28);
+            border-radius: 18px;
+            padding: 20px;
+            text-align: left;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 8px 18px rgba(31, 217, 52, 0.08);
+        }
+        .unit-card:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(31, 217, 52, 0.14); }
+        .unit-badge { display: inline-block; background: #000000; color: #ffffff; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; margin-bottom: 12px; }
+        .unit-card h3 { margin: 0 0 10px; font-size: 26px; color: #0d4d13; }
         .unit-card p { margin: 0 0 8px; color: var(--text-main); font-weight: 600; line-height: 1.5; }
-        .unit-card small { color: var(--text-sub); line-height: 1.6; }
+        .unit-card small { color: #2b3d2d; line-height: 1.6; }
 
         .container { padding: 0 40px 40px; }
         .section-title { font-size: 22px; font-weight: 700; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
@@ -68,7 +77,7 @@
         .modal-data span { color: var(--text-main); font-weight: 500; }
 
         .apple-btn { display: block; text-align: center; background: var(--apple-red); color: white; text-decoration: none; padding: 12px; border-radius: 10px; font-weight: 600; transition: 0.2s; }
-        .apple-btn:hover { background: #E01B2F; }
+        .apple-btn:hover { background:  #1fd934; }
     </style>
 </head>
 <body>
@@ -101,8 +110,7 @@
         <h2 class="section-title">Unit Spotlight</h2>
         <div class="unit-card-grid" id="unitCardGrid"></div>
 
-        <!-- Section: Top 3 (Mock-up) -->
-        <h2 class="section-title">Top 3 Most Streamed (Mock-up)</h2>
+        <h2 class="section-title">Top 3 Most Streamed</h2>
         <div class="grid" id="top3Grid" style="margin-bottom: 40px;"></div>
 
         <!-- Section: All Tracks -->
