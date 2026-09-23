@@ -120,7 +120,8 @@ async function fetchAppleMusicData() {
         ];
         
         // กรองเอาเฉพาะข้อมูลที่มีชื่อเพลงและอัลบั้มครบ
-        const validSongs = combinedResults.filter(item => item.trackName && item.collectionName);
+       // กรองเอาเฉพาะข้อมูลที่มีชื่อเพลงและอัลบั้มครบ และชื่อศิลปินต้องมีคำว่า NCT
+         const validSongs = combinedResults.filter(item => item.trackName && item.collectionName && item.artistName.toUpperCase().includes('NCT'));
         
         // ลบข้อมูลที่ซ้ำกันออก (ใช้ trackId เป็นตัวกรองหลัก)
         allSongs = Array.from(new Map(validSongs.map(item => [item.trackId, item])).values());
