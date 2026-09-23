@@ -1,9 +1,10 @@
 const express = require('express');
+const path = require('path'); // <-- เพิ่มบรรทัดนี้เข้ามาเพื่อเรียกใช้ระบบค้นหาโฟลเดอร์
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
-app.use(express.static('public')); // ให้บริการไฟล์หน้าเว็บจากโฟลเดอร์ public
+app.use(express.static(path.join(__dirname, 'public'))); // <-- แก้บรรทัดนี้ให้ระบุพาธแบบเต็ม
 
 const API_URL = 'https://itunes.apple.com/search?term=nct&entity=song&limit=200';
 let allSongs = [];
