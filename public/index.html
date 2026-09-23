@@ -79,6 +79,7 @@
         .apple-btn { display: block; text-align: center; background: var(--apple-red); color: white; text-decoration: none; padding: 12px; border-radius: 10px; font-weight: 600; transition: 0.2s; }
         .apple-btn:hover { background:  #1fd934; }
     </style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -97,7 +98,20 @@
             </select>
         </div>
     </header>
-
+<!-- แถบข้อความวิ่ง (Marquee) -->
+    <div class="marquee-container">
+        <!-- เราต้องวางข้อความซ้ำกันหลายๆ รอบ เพื่อให้เวลาย้ายแกน X ไป -50% แล้วมันจะต่อกันเนียนๆ ไม่ขาดตอน -->
+        <div class="marquee-content">
+            Neo got my back Culture things tech tech on my mind &nbsp;&nbsp;&nbsp;&nbsp;
+            Neo got my back Culture things tech tech on my mind &nbsp;&nbsp;&nbsp;&nbsp;
+            Neo got my back Culture things tech tech on my mind &nbsp;&nbsp;&nbsp;&nbsp;
+            Neo got my back Culture things tech tech on my mind &nbsp;&nbsp;&nbsp;&nbsp;
+            Neo got my back Culture things tech tech on my mind &nbsp;&nbsp;&nbsp;&nbsp;
+            Neo got my back Culture things tech tech on my mind &nbsp;&nbsp;&nbsp;&nbsp;
+            Neo got my back Culture things tech tech on my mind &nbsp;&nbsp;&nbsp;&nbsp;
+            Neo got my back Culture things tech tech on my mind &nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+    </div>
     <div class="unit-tabs" id="unitTabs">
         <button class="tab-btn active" data-unit="ALL" onclick="setUnit('ALL', this)">All Units</button>
         <button class="tab-btn" data-unit="NCT 127" onclick="setUnit('NCT 127', this)">NCT 127</button>

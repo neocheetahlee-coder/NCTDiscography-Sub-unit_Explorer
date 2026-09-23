@@ -1,0 +1,25 @@
+/* ================== Marquee Animation ================== */
+        .marquee-container {
+            background-color: #000000;
+            color: #1fd934; /* สีเขียวนีออนตามธีม */
+            padding: 12px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            display: flex;
+        }
+        
+        .marquee-content {
+            display: inline-block;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            /* สั่งให้เลื่อนไปทางซ้าย 25 วินาที วนลูปเรื่อยๆ แบบความเร็วคงที่ (linear) */
+            animation: scrollLeft 25s linear infinite;
+        }
+
+        @keyframes scrollLeft {
+            0% { transform: translateX(0); }
+            /* เลื่อนไป -50% เพื่อให้ข้อความชุดที่ 2 เลื่อนมาแทนที่ชุดแรกแบบเนียนๆ พอดี */
+            100% { transform: translateX(-50%); } 
+        }
