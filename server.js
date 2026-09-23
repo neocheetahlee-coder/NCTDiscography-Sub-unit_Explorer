@@ -163,4 +163,5 @@ app.get('/api/songs', (req, res) => {
 // เริ่มเซิร์ฟเวอร์
 fetchAppleMusicData().then(() => {
     app.listen(PORT, () => console.log(`🚀 พร้อมใช้งานที่ http://localhost:${PORT}`));
+    module.exports = app;
 });
