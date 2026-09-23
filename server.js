@@ -94,13 +94,35 @@ function customSort(arr, type) {
 // ==========================================
 async function fetchAppleMusicData() {
     try {
-        const response = await fetch(API_URL);
-        const data = await response.json();
+        // ยิง API 4 เส้นพร้อมกันตามยูนิต
+        const [res127, resDream, resU, resWish] = await Promise.all([
+            fetch('https://itunes.apple.com/search?term=nct+127&entity=song&limit=150'),
+            fetch('https://itunes.apple.com/search?term=nct+dream&entity=song&limit=150'),
+            fetch('https://itunes.apple.com/search?term=nct+u&entity=song&limit=100'),
+            fetch('https://itunes.apple.com/search?term=nct+wish&entity=song&limit=100')
+        ]);
         
-        // กรองเอาเฉพาะข้อมูลที่มีฟิลด์ครบ
-        allSongs = data.results.filter(item => item.trackName && item.collectionName);
-        songDB.buildIndex(allSongs); // นำข้อมูลไปสร้าง Hash Table
-        console.log(`✅ โหลดข้อมูลและสร้าง Hash Table สำเร็จ (${allSongs.length} เพลง)`);
+        const data127 = await res127.json();
+        const dataDream = await resDream.json();
+        const dataU = await resU.json();
+        const dataWish = await resWish.json();
+        
+        // นำข้อมูลทั้ง 4 ก้อนมารวมกัน
+        const combinedResults = [
+            ...data127.results, 
+            ...dataDream.results, 
+            ...dataU.results, 
+            ...dataWish.results
+        ];
+        
+        // กรองเอาเฉพาะข้อมูลที่มีชื่อเพลงและอัลบั้มครบ
+        const validSongs = combinedResults.filter(item => item.trackName && item.collectionName);
+        
+        // ลบข้อมูลที่ซ้ำกันออก (เผื่อกรณีมีเพลงโปรเจกต์รวมที่ API ส่งมาซ้ำซ้อน)
+        allSongs = Array.from(new Map(validSongs.map(item => [item.trackId, item])).values());
+        
+        songDB.buildIndex(allSongs); 
+        console.log(`✅ โหลดข้อมูลสำเร็จ (${allSongs.length} เพลง จาก 127, DREAM, U, WISH)`);
     } catch (error) {
         console.error("API Error:", error);
     }
