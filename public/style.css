@@ -66,6 +66,14 @@
     position: relative;
 }  
 /* ================== Draggable Physics Gallery ================== */
+.highlights-section {
+    display: block;
+}
+
+.highlights-section.hidden {
+    display: none;
+}
+
 .draggable-gallery-container {
     width: 100%;
     height: 420px;

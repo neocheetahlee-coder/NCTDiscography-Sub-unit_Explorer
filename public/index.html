@@ -121,17 +121,19 @@
     </div>
 
     <div class="container">
-        <h2 class="section-title">NCT Highlights</h2>
-        <!-- คอนเทนเนอร์สำหรับลาก (Draggable Area) -->
-        <div class="draggable-gallery-container">
-            <div class="draggable-track" id="draggableTrack">
-                <!-- ใส่ไฟล์คลิปจริงของคุณตรง src="" -->
-                <div class="clip-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay loop muted playsinline></video></div>
-                <div class="clip-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay loop muted playsinline></video></div>
-                <div class="clip-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay loop muted playsinline></video></div>
-                <div class="clip-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay loop muted playsinline></video></div>
-                <div class="clip-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay loop muted playsinline></video></div>
-                <div class="clip-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay loop muted playsinline></video></div>
+        <div id="highlightsSection" class="highlights-section">
+            <h2 class="section-title">NCT Highlights</h2>
+            <!-- คอนเทนเนอร์สำหรับลาก (Draggable Area) -->
+            <div class="draggable-gallery-container">
+                <div class="draggable-track" id="draggableTrack">
+                    <!-- ใส่ไฟล์คลิปจริงของคุณตรง src="" -->
+                    <div class="clip-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay loop muted playsinline></video></div>
+                    <div class="clip-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay loop muted playsinline></video></div>
+                    <div class="clip-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay loop muted playsinline></video></div>
+                    <div class="clip-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay loop muted playsinline></video></div>
+                    <div class="clip-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay loop muted playsinline></video></div>
+                    <div class="clip-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay loop muted playsinline></video></div>
+                </div>
             </div>
         </div>
 
@@ -170,11 +172,19 @@
         let timeout = null;
         let currentSongsData = []; // เก็บอ้างอิงข้อมูลไว้แสดงใน popup
 
+        const highlightsSection = document.getElementById('highlightsSection');
+
+        function updateHighlightsVisibility() {
+            const shouldShow = currentUnit === 'ALL';
+            highlightsSection.classList.toggle('hidden', !shouldShow);
+        }
+
         // เปลี่ยนแท็บ Unit
         function setUnit(unit, btnElement) {
             currentUnit = unit;
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             btnElement.classList.add('active');
+            updateHighlightsVisibility();
             fetchData();
         }
 
@@ -253,64 +263,101 @@
         }
 
        // ================== Physics Draggable Logic ==================
-const track = document.getElementById('draggableTrack');
-const items = document.querySelectorAll('.clip-item');
-const container = document.querySelector('.draggable-gallery-container');
+        const track = document.getElementById('draggableTrack');
+        const container = document.querySelector('.draggable-gallery-container');
 
-let isDragging = false;
-let startX = 0;
-let currentX = 0; 
-let targetX = 0;  
-let velocity = 0;
+        let isDragging = false;
+        let startX = 0;
+        let currentX = 0; 
+        let targetX = 0;  
+        let velocity = 0;
+        let lastPointerX = 0;
 
-let bounds = () => container.clientWidth - track.scrollWidth - 80;
+        let bounds = () => container.clientWidth - track.scrollWidth - 80;
 
-function updatePhysics() {
-    currentX += (targetX - currentX) * 0.08; 
-    velocity = targetX - currentX;
-    
-    let skewValue = velocity * 0.15; 
-    let scaleValue = 1 - Math.abs(velocity) * 0.0002; 
-    
-    if (targetX > 0) {
-        targetX *= 0.85; 
-    } else if (targetX < bounds()) {
-        targetX = bounds() + (targetX - bounds()) * 0.85; 
-    }
+        function updatePhysics() {
+            const limit = bounds();
 
-    track.style.transform = `translate3d(${currentX}px, 0, 0)`;
-    items.forEach(item => {
-        item.style.transform = `skewX(${skewValue}deg) scale(${scaleValue})`;
-    });
+            if (targetX > 0) {
+                targetX = 0;
+            } else if (targetX < limit) {
+                targetX = limit;
+            }
 
-    requestAnimationFrame(updatePhysics); 
-}
-updatePhysics(); 
+            const spring = (targetX - currentX) * 0.12;
+            velocity += spring;
+            velocity *= 0.82;
+            currentX += velocity;
 
-const startDrag = (e) => {
-    isDragging = true;
-    let pageX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
-    startX = pageX - targetX;
-};
+            if (Math.abs(targetX - currentX) < 0.2 && Math.abs(velocity) < 0.2) {
+                currentX = targetX;
+                velocity = 0;
+            }
 
-const moveDrag = (e) => {
-    if (!isDragging) return;
-    let pageX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
-    targetX = pageX - startX;
-};
+            const skewValue = velocity * 0.18;
+            const scaleValue = 1 - Math.min(Math.abs(velocity) * 0.006, 0.08);
 
-const stopDrag = () => { isDragging = false; };
+            track.style.transform = `translate3d(${currentX}px, 0, 0)`;
+            document.querySelectorAll('.clip-item').forEach(item => {
+                item.style.transform = `skewX(${skewValue}deg) scale(${scaleValue})`;
+            });
 
-container.addEventListener('mousedown', startDrag);
-window.addEventListener('mousemove', moveDrag);
-window.addEventListener('mouseup', stopDrag);
+            requestAnimationFrame(updatePhysics);
+        }
+        updatePhysics(); 
 
-container.addEventListener('touchstart', startDrag);
-window.addEventListener('touchmove', moveDrag);
-window.addEventListener('touchend', stopDrag);
+        const startDrag = (e) => {
+            isDragging = true;
+            let pageX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+            startX = pageX - targetX;
+            lastPointerX = pageX;
+        };
 
-        // โหลดข้อมูลครั้งแรกเมื่อเปิดหน้าเว็บ
-        renderUnitCards();
+        const moveDrag = (e) => {
+            if (!isDragging) return;
+            let pageX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+            const delta = pageX - lastPointerX;
+            lastPointerX = pageX;
+            targetX += delta;
+            velocity = delta * 0.75;
+        };
+
+        const stopDrag = () => {
+            isDragging = false;
+            velocity *= 0.85;
+        };
+
+        container.addEventListener('mousedown', startDrag);
+        window.addEventListener('mousemove', moveDrag);
+        window.addEventListener('mouseup', stopDrag);
+        container.addEventListener('touchstart', startDrag);
+        window.addEventListener('touchmove', moveDrag);
+        window.addEventListener('touchend', stopDrag);
+
+        // ================== Fetch Music Video API ==================
+        async function fetchHighlightVideos() {
+            try {
+                const res = await fetch('https://itunes.apple.com/search?term=nct&entity=musicVideo&limit=8');
+                const data = await res.json();
+                
+                track.innerHTML = ''; // ล้างคลิปเดิมทิ้ง
+                
+                data.results.forEach(item => {
+                    if(item.previewUrl) {
+                        track.innerHTML += `
+                            <div class="clip-item">
+                                <video src="${item.previewUrl}" poster="${item.artworkUrl100.replace('100x100bb', '600x600bb')}" autoplay loop muted playsinline></video>
+                            </div>
+                        `;
+                    }
+                });
+            } catch (error) {
+                console.error("Error fetching videos:", error);
+            }
+        }
+
+        // โหลดข้อมูลครั้งแรกเมื่อเปิดหน้าเว็บ (เอา renderUnitCards ที่ทำให้พังออกไปแล้ว)
+        fetchHighlightVideos();
         fetchData();
     </script>
 </body>
