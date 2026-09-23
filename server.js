@@ -94,35 +94,39 @@ function customSort(arr, type) {
 // ==========================================
 async function fetchAppleMusicData() {
     try {
-        // ยิง API 4 เส้นพร้อมกันตามยูนิต
-        const [res127, resDream, resU, resWish] = await Promise.all([
-            fetch('https://itunes.apple.com/search?term=nct+127&entity=song&limit=150'),
-            fetch('https://itunes.apple.com/search?term=nct+dream&entity=song&limit=150'),
-            fetch('https://itunes.apple.com/search?term=nct+u&entity=song&limit=100'),
-            fetch('https://itunes.apple.com/search?term=nct+wish&entity=song&limit=100')
+        // ยิง API แยกตามยูนิต พร้อมบังคับค้นหาจากชื่อศิลปิน (attribute=artistTerm)
+        // สำหรับ NCT WISH ให้ดึงจากทั้งสโตร์ไทย (TH) และญี่ปุ่น (JP) เพื่อให้ได้ผลงานครบทั้ง 2 ภาษา
+        const [res127, resDream, resU, resWishTH, resWishJP] = await Promise.all([
+            fetch('https://itunes.apple.com/search?term=nct+127&entity=song&attribute=artistTerm&limit=200&country=TH'),
+            fetch('https://itunes.apple.com/search?term=nct+dream&entity=song&attribute=artistTerm&limit=200&country=TH'),
+            fetch('https://itunes.apple.com/search?term=nct+u&entity=song&attribute=artistTerm&limit=200&country=TH'),
+            fetch('https://itunes.apple.com/search?term=nct+wish&entity=song&attribute=artistTerm&limit=200&country=TH'),
+            fetch('https://itunes.apple.com/search?term=nct+wish&entity=song&attribute=artistTerm&limit=200&country=JP')
         ]);
         
         const data127 = await res127.json();
         const dataDream = await resDream.json();
         const dataU = await resU.json();
-        const dataWish = await resWish.json();
+        const dataWishTH = await resWishTH.json();
+        const dataWishJP = await resWishJP.json();
         
-        // นำข้อมูลทั้ง 4 ก้อนมารวมกัน
+        // นำข้อมูลทั้งหมดมารวมกัน
         const combinedResults = [
             ...data127.results, 
             ...dataDream.results, 
             ...dataU.results, 
-            ...dataWish.results
+            ...dataWishTH.results,
+            ...dataWishJP.results
         ];
         
         // กรองเอาเฉพาะข้อมูลที่มีชื่อเพลงและอัลบั้มครบ
         const validSongs = combinedResults.filter(item => item.trackName && item.collectionName);
         
-        // ลบข้อมูลที่ซ้ำกันออก (เผื่อกรณีมีเพลงโปรเจกต์รวมที่ API ส่งมาซ้ำซ้อน)
+        // ลบข้อมูลที่ซ้ำกันออก (ใช้ trackId เป็นตัวกรองหลัก)
         allSongs = Array.from(new Map(validSongs.map(item => [item.trackId, item])).values());
         
         songDB.buildIndex(allSongs); 
-        console.log(`✅ โหลดข้อมูลสำเร็จ (${allSongs.length} เพลง จาก 127, DREAM, U, WISH)`);
+        console.log(`✅ โหลดข้อมูลสำเร็จ (${allSongs.length} เพลง จาก 127, DREAM, U, WISH ทั้ง TH และ JP)`);
     } catch (error) {
         console.error("API Error:", error);
     }
