@@ -46,4 +46,64 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); 
     z-index: 10; 
     position: relative;
-}     
+}   
+/* สไตล์สำหรับปุ่ม Sorting Dropdown */
+#sortSelect {
+    background-color: #1fd934; /* พื้นหลังสีเขียวนีออน */
+    color: #000000; /* ตัวอักษรสีดำ */
+    font-weight: 600; 
+    border: none;
+    cursor: pointer;
+    /* แอนิเมชันเด้งดึ๋ง */
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* เอฟเฟกต์ Hover ขยายตัวสไตล์ macOS Dock */
+#sortSelect:hover {
+    transform: scale(1.08); /* ขยายขึ้นเล็กน้อย (ปรับค่าน้อยกว่าปุ่ม Unit เพราะกล่องข้อความมันยาวกว่า) */
+    box-shadow: 0 5px 15px rgba(31, 217, 52, 0.3); /* เพิ่มเงาสีเขียวให้ดูมีมิติ */
+    z-index: 10;
+    position: relative;
+}  
+/* ================== Draggable Physics Gallery ================== */
+.draggable-gallery-container {
+    width: 100%;
+    height: 420px;
+    overflow: hidden; 
+    cursor: grab; 
+    position: relative;
+    margin-bottom: 40px;
+    padding: 20px 0;
+}
+
+.draggable-gallery-container:active {
+    cursor: grabbing; 
+}
+
+.draggable-track {
+    display: flex;
+    gap: 15px; /* ลดช่องว่างให้รูปชิดกันมากขึ้นแบบในวิดีโอ */
+    height: 100%;
+    width: max-content;
+    padding: 0 40px;
+    will-change: transform;
+}
+
+.clip-item {
+    width: 560px; /* ขยายกว้างขึ้นเป็นแนวนอน */
+    height: 320px; /* ปรับความสูงให้สมดุล (อัตราส่วนคล้ายๆ 16:9) */
+    border-radius: 8px; /* ปรับขอบให้ตายน้อยลง ดูคลีนๆ แบบในแบบ */
+    overflow: hidden;
+    flex-shrink: 0;
+    background: #000;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transform-origin: center center; /* เปลี่ยนจุดหมุนมาไว้ตรงกลางเพื่อเวลาเอียงจะได้สมดุล */
+    will-change: transform;
+}
+
+.clip-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none; 
+}

@@ -91,8 +91,8 @@
             
             <!-- ระบบ Sorting (ใช้ลอจิกเรียงข้อมูลฝั่ง Backend) -->
             <select id="sortSelect" onchange="fetchData()">
-                <option value="newest">Release Date (ใหม่ -> เก่า)</option>
-                <option value="oldest">Release Date (เก่า -> ใหม่)</option>
+                <option value="newest">Release Date (Newest -> Oldest)</option>
+                <option value="oldest">Release Date (Oldest -> Newest)</option>
                 <option value="az">Song Name (A - Z)</option>
                 <option value="za">Song Name (Z - A)</option>
             </select>
@@ -121,8 +121,19 @@
     </div>
 
     <div class="container">
-        <h2 class="section-title">Unit Spotlight</h2>
-        <div class="unit-card-grid" id="unitCardGrid"></div>
+        <h2 class="section-title">NCT Highlights</h2>
+        <!-- คอนเทนเนอร์สำหรับลาก (Draggable Area) -->
+        <div class="draggable-gallery-container">
+            <div class="draggable-track" id="draggableTrack">
+                <!-- ใส่ไฟล์คลิปจริงของคุณตรง src="" -->
+                <div class="clip-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay loop muted playsinline></video></div>
+                <div class="clip-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay loop muted playsinline></video></div>
+                <div class="clip-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay loop muted playsinline></video></div>
+                <div class="clip-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay loop muted playsinline></video></div>
+                <div class="clip-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay loop muted playsinline></video></div>
+                <div class="clip-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay loop muted playsinline></video></div>
+            </div>
+        </div>
 
         <h2 class="section-title">Top 3 Most Streamed</h2>
         <div class="grid" id="top3Grid" style="margin-bottom: 40px;"></div>
@@ -241,26 +252,62 @@
             }
         }
 
-        function renderUnitCards() {
-            const unitCards = [
-                {
-                    name: 'NCT U',
-                    tag: 'Special Unit',
-                    members: 'Taeil • Doyoung • Jaehyun • Jungwoo • Mark • Xiaojun • Hendery • Ten • Yangyang',
-                    description: 'Flexible NCT lineup with varied vocals, dynamic performances, and iconic unit tracks.'
-                }
-            ];
+       // ================== Physics Draggable Logic ==================
+const track = document.getElementById('draggableTrack');
+const items = document.querySelectorAll('.clip-item');
+const container = document.querySelector('.draggable-gallery-container');
 
-            const container = document.getElementById('unitCardGrid');
-            container.innerHTML = unitCards.map(unit => `
-                <button class="unit-card" type="button" onclick="setUnit('${unit.name}', document.querySelector('.tab-btn[data-unit=\"${unit.name}\"]'))">
-                    <span class="unit-badge">${unit.tag}</span>
-                    <h3>${unit.name}</h3>
-                    <p>${unit.members}</p>
-                    <small>${unit.description}</small>
-                </button>
-            `).join('');
-        }
+let isDragging = false;
+let startX = 0;
+let currentX = 0; 
+let targetX = 0;  
+let velocity = 0;
+
+let bounds = () => container.clientWidth - track.scrollWidth - 80;
+
+function updatePhysics() {
+    currentX += (targetX - currentX) * 0.08; 
+    velocity = targetX - currentX;
+    
+    let skewValue = velocity * 0.15; 
+    let scaleValue = 1 - Math.abs(velocity) * 0.0002; 
+    
+    if (targetX > 0) {
+        targetX *= 0.85; 
+    } else if (targetX < bounds()) {
+        targetX = bounds() + (targetX - bounds()) * 0.85; 
+    }
+
+    track.style.transform = `translate3d(${currentX}px, 0, 0)`;
+    items.forEach(item => {
+        item.style.transform = `skewX(${skewValue}deg) scale(${scaleValue})`;
+    });
+
+    requestAnimationFrame(updatePhysics); 
+}
+updatePhysics(); 
+
+const startDrag = (e) => {
+    isDragging = true;
+    let pageX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+    startX = pageX - targetX;
+};
+
+const moveDrag = (e) => {
+    if (!isDragging) return;
+    let pageX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+    targetX = pageX - startX;
+};
+
+const stopDrag = () => { isDragging = false; };
+
+container.addEventListener('mousedown', startDrag);
+window.addEventListener('mousemove', moveDrag);
+window.addEventListener('mouseup', stopDrag);
+
+container.addEventListener('touchstart', startDrag);
+window.addEventListener('touchmove', moveDrag);
+window.addEventListener('touchend', stopDrag);
 
         // โหลดข้อมูลครั้งแรกเมื่อเปิดหน้าเว็บ
         renderUnitCards();
