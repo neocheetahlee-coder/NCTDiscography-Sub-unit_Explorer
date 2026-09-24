@@ -158,9 +158,9 @@
                 </div>
             </div>
             <div class="modal-data">
-                <div>Track ID: <span id="m-trackId"></span></div>
-                <div>Collection ID: <span id="m-collectionId"></span></div>
-                <div>Artist ID: <span id="m-artistId"></span></div>
+                <div>Genre: <span id="m-genre"></span></div>
+                <div>Duration: <span id="m-duration"></span></div>
+                <div>Members: <span id="m-members"></span></div>
                 <div>Release Date: <span id="m-date"></span></div>
             </div>
             <a href="#" id="modalLink" class="apple-btn" target="_blank">Listen on Apple Music 🎵</a>
@@ -245,11 +245,27 @@
             document.getElementById('modalArtist').innerText = song.artistName;
             document.getElementById('modalCollection').innerText = song.collectionName;
             
-            document.getElementById('m-trackId').innerText = song.trackId;
-            document.getElementById('m-collectionId').innerText = song.collectionId;
-            document.getElementById('m-artistId').innerText = song.artistId;
+            // แปลงความยาวเพลงจากมิลลิวินาที เป็น นาที:วินาที
+            const millis = song.trackTimeMillis;
+            const minutes = Math.floor(millis / 60000);
+            const seconds = ((millis % 60000) / 1000).toFixed(0);
+            const durationStr = minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+
+            // ระบบ DSA: Hash Table สำหรับดึงข้อมูลสมาชิกด้วยเวลา O(1)
+            const unitMembers = {
+                "NCT 127": "Taeyong, Johnny, Yuta, Doyoung, Jaehyun, Jungwoo, Mark, Haechan",
+                "NCT DREAM": "Mark, Renjun, Jeno, Haechan, Jaemin, Chenle, Jisung",
+                "WayV": "Kun, Ten, Winwin, Xiaojun, Hendery, Yangyang",
+                "NCT U": "Various Members (Rotational)",
+                "NCT WISH": "Sion, Riku, Yushi, Jaehee, Ryo, Sakuya"
+    };
+
+            // ยัดข้อมูลใหม่ลง Popup
+            document.getElementById('m-genre').innerText = song.primaryGenreName;
+            document.getElementById('m-duration').innerText = durationStr;
+            document.getElementById('m-members').innerText = unitMembers[song.artistName] || "NCT Members";
             document.getElementById('m-date').innerText = new Date(song.releaseDate).toLocaleDateString();
-            
+    
             document.getElementById('modalLink').href = song.trackViewUrl;
 
             // เล่นแอนิเมชัน Fade-in
