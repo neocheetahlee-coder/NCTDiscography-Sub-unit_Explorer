@@ -55,7 +55,7 @@ class SearchHashTable {
 const songDB = new SearchHashTable();
 
 // ==========================================
-// DSA 2: MANUAL SORTING ALGORITHMS
+// DSA 2: SORTING ALGORITHMS
 // ==========================================
 // เขียน Insertion Sort เองเพื่อจัดเรียงเพลงตามชื่อเพลง (A-Z, Z-A) หรือวันที่วางจำหน่าย (ใหม่สุด, เก่าสุด)
 function customSort(arr, type) {
