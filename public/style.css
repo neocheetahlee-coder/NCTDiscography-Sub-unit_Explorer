@@ -1,3 +1,14 @@
+/* กำหนดให้หัวข้อหลักของเว็บใช้ฟ้อนต์ Archivo Black */
+h1 {
+    font-family: 'Archivo Black', sans-serif;
+    letter-spacing: -1px; /* ช่วยให้ตัวอักษรหนาชิดกันดูเท่และคมขึ้น */
+}
+/* กำหนดให้หัวข้อหลักทั้งหมดใช้ฟ้อนต์ Archivo Black */
+h2, h3, .section-title, .highlights-section h2 {
+    font-family: 'Archivo Black', sans-serif !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.5px;
+}
 /* ================== Marquee Animation ================== */
         .marquee-container {
             background-color: #000000;
@@ -10,10 +21,13 @@
         
         .marquee-content {
             display: inline-block;
+            font-family: 'Urbanist', sans-serif; /* <-- เพิ่มฟ้อนต์ตรงนี้ */
+            font-style: italic; 
             font-size: 16px;
-            font-weight: 700;
+            font-weight: 600;
             letter-spacing: 1.5px;
             text-transform: uppercase;
+            /* สั่งให้เลื่อนไปทางซ้าย 25 วินาที วนลูปเรื่อยๆ แบบความเร็วคงที่ (linear) */
             animation: scrollLeft 25s linear infinite;
         }
 
@@ -114,3 +128,24 @@
     object-fit: cover;
     pointer-events: none; 
 }
+/* เจาะจงสั่งให้ทุกบรรทัดและตัวหนังสือทุกตัวใน .modal-data ใช้ฟ้อนต์ Geist Mono */
+.modal-data, .modal-data div, .modal-data span {
+    font-family: 'Geist Mono', monospace !important;
+}
+/*==================กำหนดให้ชื่อศิลปิน, ชื่ออัลบั้ม และปุ่ม Apple Music ใน Popup ใช้ฟ้อนต์ Geist Mono ด้วย ==================*/
+#modalArtist, #modalCollection, .apple-btn {
+    font-family: 'Geist Mono', monospace !important;
+}
+/*==================กำหนดให้ช่องค้นหา (Search Input) ใช้ฟ้อนต์ Geist Mono ================== */
+input[type="text"], input[type="search"], .search-input {
+    font-family: 'Geist Mono', monospace !important;
+}
+/*==================กำหนดให้ช่อง Sorting ใช้ฟ้อนต์ Geist Mono ================== */
+#sortSelect, select {
+    font-family: 'Geist Mono', monospace !important;
+}
+/* ================== กำหนดให้ปุ่ม Tab ทั้งหมด (All Unit, NCT 127, ฯลฯ) ใช้ฟ้อนต์ Geist Mono==================*/
+.tab-btn, #sortSelect, select, input[type="text"], input[type="search"], .search-input {
+    font-family: 'Geist Mono', monospace !important;
+}
+

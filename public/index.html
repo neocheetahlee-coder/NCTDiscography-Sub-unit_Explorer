@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- ดึงฟ้อนต์ Archivo Black จาก Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NCT Discography & Sub-unit Explorer</title>
@@ -56,6 +68,19 @@
         .card-info { padding: 12px; }
         .track-name { font-weight: 600; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; }
         .artist-name { color: var(--text-sub); font-size: 13px; }
+
+        /* Top-3 specific layout: always center three cards */
+        #top3Grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        #top3Grid .card {
+            flex: 0 0 260px; /* fixed base width to keep three nicely centered */
+            max-width: 320px;
+        }
 
         /* แอนิเมชัน Fade */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -163,7 +188,7 @@
                 <div>Members: <span id="m-members"></span></div>
                 <div>Release Date: <span id="m-date"></span></div>
             </div>
-            <a href="#" id="modalLink" class="apple-btn" target="_blank">Listen on Apple Music 🎵</a>
+            <a href="#" id="modalLink" class="apple-btn" target="_blank">Listen on Apple Music </a>
         </div>
     </div>
 
@@ -225,9 +250,8 @@
                 return `
                     <div class="card" onclick="openModal(${song.trackId})">
                         <img src="${imgUrl}" alt="cover" loading="lazy">
-                        <div class="card-info">
-                            <div class="track-name">${song.trackName}</div>
-                            <div class="artist-name">${song.artistName}</div>
+                            <div class="card-info"><div class="track-name" style="font-family: 'Ubuntu', sans-serif !important; font-weight: 500 !important;">${song.trackName}</div>
+                            <div class="artist-name" style="font-family: 'Geist Mono', monospace !important;">${song.artistName}</div>
                         </div>
                     </div>
                 `;
