@@ -347,7 +347,7 @@
                     if(item.previewUrl) {
                         track.innerHTML += `
                             <div class="clip-item">
-                               <video src="${item.previewUrl}" poster="${item.artworkUrl100.replace('100x100bb', '600x600bb')}" loop muted playsinline onmouseenter="this.play()" onmouseleave="this.pause()"></video>
+                               <video src="${item.previewUrl}" poster="${item.artworkUrl100.replace('100x100bb', '600x600bb')}" autoplay loop muted playsinline></video>
                             </div>
                         `;
                     }
