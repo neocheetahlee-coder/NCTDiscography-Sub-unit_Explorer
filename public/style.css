@@ -21,7 +21,7 @@ h2, h3, .section-title, .highlights-section h2 {
         
         .marquee-content {
             display: inline-block;
-            font-family: 'Urbanist', sans-serif; /* <-- เพิ่มฟ้อนต์ตรงนี้ */
+            font-family: 'Geist Pixel', monospace, sans-serif;
             font-style: italic; 
             font-size: 16px;
             font-weight: 600;
