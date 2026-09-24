@@ -317,7 +317,7 @@
             if (!isDragging) return;
             let pageX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
             const delta = pageX - lastPointerX;
-            lastPointerX = pageX;=
+            lastPointerX = pageX;
             targetX += delta;
             velocity = delta * 0.75;
         };
