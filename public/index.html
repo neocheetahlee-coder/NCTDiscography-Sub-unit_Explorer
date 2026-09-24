@@ -317,7 +317,7 @@
             if (!isDragging) return;
             let pageX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
             const delta = pageX - lastPointerX;
-            lastPointerX = pageX;
+            lastPointerX = pageX;=
             targetX += delta;
             velocity = delta * 0.75;
         };
@@ -326,7 +326,8 @@
             isDragging = false;
             velocity *= 0.85;
         };
-
+// ดึงวิดีโอทั้งหมดที่มีคลาส preview-video
+ 
         container.addEventListener('mousedown', startDrag);
         window.addEventListener('mousemove', moveDrag);
         window.addEventListener('mouseup', stopDrag);
@@ -346,7 +347,7 @@
                     if(item.previewUrl) {
                         track.innerHTML += `
                             <div class="clip-item">
-                                <video src="${item.previewUrl}" poster="${item.artworkUrl100.replace('100x100bb', '600x600bb')}" autoplay loop muted playsinline></video>
+                               <video src="${item.previewUrl}" poster="${item.artworkUrl100.replace('100x100bb', '600x600bb')}" loop muted playsinline onmouseenter="this.play()" onmouseleave="this.pause()"></video>
                             </div>
                         `;
                     }
