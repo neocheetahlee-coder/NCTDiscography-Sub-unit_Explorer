@@ -222,9 +222,13 @@ body {
     background-color: #2c2c2e; /* สีพื้นหลังตอนกลางคืน/ค่าเริ่มต้น */
 }
 
+/* ไอคอนพระอาทิตย์ (Day Mode) */
 .theme-switch input + .slider:before {
     position: absolute;
-    content: "☀️"; /* ไอคอนพระอาทิตย์ตอน Day Mode */
+    font-family: "Font Awesome 6 Free"; /* สั่งให้ใช้ FontAwesome */
+    font-weight: 900;                   /* ต้องตั้งค่าเป็น 900 เพื่อใช้แบบ Solid */
+    content: "\f185";                   /* รหัสไอคอน fa-sun */
+    color: #f39c12;                     /* สีส้มเหลืองของพระอาทิตย์ */
     font-size: 14px;
     height: 22px;
     width: 22px;
@@ -239,14 +243,12 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-.theme-switch input:checked + .slider {
-    background-color: #1fd934; /* สีเขียวนีออน NCT ตอนเปิด Dark Mode */
-}
-
+/* ไอคอนพระจันทร์เสี้ยว (Night Mode) */
 .theme-switch input:checked + .slider:before {
-    content: "🌙"; /* ไอคอนพระจันทร์เสี้ยวตอน Night Mode */
+    content: "\f186";                   /* รหัสไอคอน fa-moon */
+    color: #f1c40f;                     /* สีเหลืองของพระจันทร์ */
     transform: translateX(28px);
-    background-color: #0b0b0b;
+    background-color: #0b0b0b;          /* พื้นหลังวงกลมสีดำกลืนกับเว็บ */
 }
 
 .slider {
