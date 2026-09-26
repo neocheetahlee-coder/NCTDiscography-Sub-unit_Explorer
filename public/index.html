@@ -66,7 +66,7 @@
         
         /* Grid เพลง */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
-        .card { background: var(--card-bg); border-radius: 12px; overflow: hidden; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; animation: fadeIn 0.5s ease-out; }
+        .card { position: relative; background: var(--card-bg); border-radius: 12px; overflow: hidden; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; animation: fadeIn 0.5s ease-out; }
         .card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
         .card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-bottom: 1px solid var(--border); }
         .card-info { padding: 12px; }
@@ -85,6 +85,34 @@
             flex: 0 0 260px; /* fixed base width to keep three nicely centered */
             max-width: 320px;
         }
+
+        /* Rank badge for Top-3 cards (clean pill with Geist Mono) */
+        #top3Grid .rank-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(255,255,255,0.78);
+            color: var(--text-main);
+            min-width: 32px;
+            height: 28px;
+            padding: 0 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 12px;
+            box-shadow: 0 4px 10px rgba(3,10,6,0.07);
+            z-index: 6;
+            font-family: 'Geist Mono', monospace !important;
+            letter-spacing: 0.4px;
+            backdrop-filter: blur(3px);
+        }
+
+        /* Accent variations for ranks */
+        #top3Grid .rank-badge.rank-1 { background: linear-gradient(135deg, rgba(255,241,208,0.82), rgba(255,224,138,0.82)); color:#1b1b1b; }
+        #top3Grid .rank-badge.rank-2 { background: linear-gradient(135deg, rgba(243,246,251,0.82), rgba(223,230,248,0.82)); color:#0f1720; }
+        #top3Grid .rank-badge.rank-3 { background: linear-gradient(135deg, rgba(246,237,234,0.82), rgba(241,216,192,0.82)); color:#0f1720; }
 
         /* แอนิเมชัน Fade */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -120,8 +148,8 @@
             
             <!-- ระบบ Sorting (ใช้ลอจิกเรียงข้อมูลฝั่ง Backend) -->
             <select id="sortSelect" onchange="fetchData()">
-                <option value="newest">Date : Oldest</option>
-                <option value="oldest">Date : Newest</option>
+                <option value="newest">Date : Newest</option> 
+                <option value="oldest">Date : Oldest</option>
                 <option value="az"> Name : A - Z</option>
                 <option value="za"> Name : Z - A</option>
             </select>
@@ -254,11 +282,18 @@
                 container.innerHTML = `<p style="color:var(--text-sub)">No results found.</p>`;
                 return;
             }
-            container.innerHTML = items.map(song => {
+            container.innerHTML = items.map((song, idx) => {
                 const imgUrl = getHighResImage(song.artworkUrl100);
                 // แนบ ID เพลงไปกับฟังก์ชันเปิด Modal
+                // ถ้าเป็น Top3 ให้แสดง badge ลำดับ
+                let rankBadge = '';
+                if (containerId === 'top3Grid') {
+                    const rankClass = `rank-${idx + 1}`;
+                    rankBadge = `<div class="rank-badge ${rankClass}">${idx + 1}</div>`;
+                }
                 return `
                     <div class="card" onclick="openModal(${song.trackId})">
+                        ${rankBadge}
                         <img src="${imgUrl}" alt="cover" loading="lazy">
                             <div class="card-info"><div class="track-name" style="font-family: 'Ubuntu', sans-serif !important; font-weight: 500 !important;">${song.trackName}</div>
                             <div class="artist-name" style="font-family: 'Geist Mono', monospace !important;">${song.artistName}</div>
@@ -425,9 +460,14 @@ function toggleTheme() {
 // ตรวจสอบค่าที่ผู้ใช้เคยเลือกไว้ล่าสุด (จำสถานะโหมด)
 window.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark' || !savedTheme) { 
+    if (savedTheme === 'dark') {
+        // user explicitly wanted dark
         document.body.classList.add('dark-mode');
         document.getElementById('themeToggle').checked = true;
+    } else {
+        // default to day mode when no preference
+        document.body.classList.remove('dark-mode');
+        document.getElementById('themeToggle').checked = false;
     }
 });
     </script>

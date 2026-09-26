@@ -39,7 +39,7 @@ h2, h3, .section-title, .highlights-section h2 {
    .tab-btn { 
     padding: 8px 16px; 
     border-radius: 20px; 
-    border: none; 
+    border: 1px solid transparent; /* keep consistent width across modes */
     background: #E8E8ED; 
     color: var(--text-main); 
     font-weight: 600; 
@@ -65,7 +65,7 @@ h2, h3, .section-title, .highlights-section h2 {
     background-color: #1fd934; /* พื้นหลังสีเขียวนีออน */
     color: #000000; /* ตัวอักษรสีดำ */
     font-weight: 600; 
-    border: none;
+    border: 1px solid var(--border-color); /* keep same border width as inputs */
     cursor: pointer;
     /* แอนิเมชันเด้งดึ๋ง */
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -228,7 +228,7 @@ body {
     font-family: "Font Awesome 6 Free"; /* สั่งให้ใช้ FontAwesome */
     font-weight: 900;                   /* ต้องตั้งค่าเป็น 900 เพื่อใช้แบบ Solid */
     content: "\f185";                   /* รหัสไอคอน fa-sun */
-    color: #f39c12;                     /* สีส้มเหลืองของพระอาทิตย์ */
+    color: #1fd934;                     /* สีส้มเหลืองของพระอาทิตย์ */
     font-size: 14px;
     height: 22px;
     width: 22px;
@@ -246,7 +246,7 @@ body {
 /* ไอคอนพระจันทร์เสี้ยว (Night Mode) */
 .theme-switch input:checked + .slider:before {
     content: "\f186";                   /* รหัสไอคอน fa-moon */
-    color: #f1c40f;                     /* สีเหลืองของพระจันทร์ */
+    color: #1fd934;                     /* สีส้มเหลืองของพระจันทร์ */
     transform: translateX(28px);
     background-color: #0b0b0b;          /* พื้นหลังวงกลมสีดำกลืนกับเว็บ */
 }
@@ -260,23 +260,23 @@ body {
 body.dark-mode .tab-btn {
     background-color: #2c2c2e; 
     color: #a1a1a6;            
-    border: 1px solid #3a3a3c;
+    border-color: #3a3a3c; /* preserve width, only change color */
 }
 
 /* 2. ปรับแถบ Header ให้เป็นสีเทาเข้ม (เฉพาะตอนเปิดโหมดกลางคืน) */
 body.dark-mode header {
     background-color: #161618; 
-    border: 1px solid #262629;            
-    border-radius: 16px;                  
-    padding: 20px 24px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--border-color);            
+    border-radius: 0;                  
+    padding: 20px 40px; /* match default header padding */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
 }
 
 /* 3. ปุ่มตอนถูกเลือก (Active) ให้เป็นสีเขียวนีออนเหมือนเดิม ทั้ง 2 โหมด */
 .tab-btn.active {
     background-color: #1fd934 !important; 
     color: #000000 !important;            
-    border: none !important;
+    border-color: transparent !important; /* keep width consistent */
 }
 /* ================== Normalize Search & Sort Box ================== */
 /* ล็อกขนาดช่องค้นหาและปุ่ม Sorting ให้เท่ากันเป๊ะในทุกโหมด */
