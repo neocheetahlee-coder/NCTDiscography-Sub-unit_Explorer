@@ -364,3 +364,34 @@ body.dark-mode .modal-content {
 #searchInput {
     padding-right: 32px !important; 
 }
+/* ================== Footer ================== */
+.site-footer {
+    margin-top: 60px;
+    padding: 30px 20px;
+    border-top: 1px solid var(--border-color, #e5e5e7);
+    text-align: center;
+}
+
+.footer-container p {
+    color: var(--text-sub, #86868b);
+    font-size: 13px;
+    margin: 6px 0;
+    font-family: 'Geist Mono', monospace; /* ใช้ฟอนต์ Mono ให้ดูเป็นนักพัฒนา */
+}
+
+/* ลิงก์ Apple Music API */
+.apple-link {
+    color: var(--text-main, #1d1d1f);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.apple-link:hover {
+    color: #1fd934; /* สีเขียวนีออน NCT เมื่อเอาเมาส์ชี้ */
+}
+
+/* ปรับสีเส้นคั่นตอนเปิด Dark Mode */
+body.dark-mode .site-footer {
+    border-top: 1px solid #262629;
+}
