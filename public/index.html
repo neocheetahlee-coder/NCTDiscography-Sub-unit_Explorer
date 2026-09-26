@@ -130,11 +130,19 @@
         .modal-title { font-size: 20px; font-weight: 700; margin: 0 0 5px 0; color: var(--text-main); }
         .modal-sub { color: var(--apple-red); font-weight: 600; font-size: 15px; margin: 0 0 10px 0; }
         
-        .modal-data { font-size: 13px; color: var(--text-sub); line-height: 1.6; background: #F5F5F7; padding: 15px; border-radius: 12px; margin-bottom: 20px; }
+        .modal-data { font-size: 13px; color: var(--text-main); line-height: 1.6; background: var(--card-bg); padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border); }
         .modal-data span { color: var(--text-main); font-weight: 500; }
 
         .apple-btn { display: block; text-align: center; background: var(--apple-red); color: white; text-decoration: none; padding: 12px; border-radius: 10px; font-weight: 600; transition: 0.2s; }
         .apple-btn:hover { background:  #1fd934; }
+
+        /* Ensure modal texts adapt to theme */
+        body.dark-mode .modal-content {
+            background: var(--card-bg);
+            color: var(--text-main);
+        }
+        body.dark-mode .modal-data { background: var(--card-bg); color: var(--text-main); border-color: var(--border-color); }
+        body.dark-mode .modal-title, body.dark-mode .modal-sub { color: var(--text-main); }
     </style>
 <link rel="stylesheet" href="style.css">
 </head>
