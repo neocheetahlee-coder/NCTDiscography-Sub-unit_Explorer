@@ -129,6 +129,13 @@
         .modal-header div { flex: 1; }
         .modal-title { font-size: 20px; font-weight: 700; margin: 0 0 5px 0; color: var(--text-main); }
         .modal-sub { color: var(--apple-red); font-weight: 600; font-size: 15px; margin: 0 0 10px 0; }
+        body:not(.dark-mode) .modal-title,
+        body:not(.dark-mode) #modalTrack {
+            color: #ffffff !important;
+        }
+        body:not(.dark-mode) #modalCollection {
+            color: rgba(255,255,255,0.78) !important;
+        }
         
         .modal-data { font-size: 13px; color: var(--text-main); line-height: 1.6; background: var(--card-bg); padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border); }
         .modal-data span { color: var(--text-main); font-weight: 500; }
