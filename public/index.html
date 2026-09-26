@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ดึงฟ้อนต์ Archivo Black จาก Google Fonts -->
+    <!-- ดึงฟ้อนต์ Archivo จาก Google Fontsมาใช้ -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NCT Discography & Sub-unit Explorer</title>
     <style>
-        /* ================== ดีไซน์สไตล์ Apple Music ================== */
+        /* ================== ดีไซน์หน้าเว็บ ================== */
         :root {
             --apple-red: #1fd934;
             --bg-color: #FBFBFD;
@@ -124,6 +124,12 @@
                 <option value="az">Song Name (A - Z)</option>
                 <option value="za">Song Name (Z - A)</option>
             </select>
+            <div class="theme-switch-wrapper" style="display: inline-flex; align-items: center; margin-left: 15px;">
+            <label class="theme-switch" style="position: relative; display: inline-block; width: 56px; height: 28px;">
+                <input type="checkbox" id="themeToggle" onchange="toggleTheme()" style="opacity: 0; width: 0; height: 0;">
+                <span class="slider" style="cursor: pointer; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
+            </label>
+        </div>
         </div>
     </header>
 <!-- แถบข้อความวิ่ง (Marquee) -->
@@ -403,6 +409,26 @@
         // โหลดข้อมูลครั้งแรกเมื่อเปิดหน้าเว็บ (เอา renderUnitCards ที่ทำให้พังออกไปแล้ว)
         fetchHighlightVideos();
         fetchData();
+        // ฟังก์ชันสลับธีม Day/Night Mode
+function toggleTheme() {
+    const isChecked = document.getElementById('themeToggle').checked;
+    if (isChecked) {
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark');
+    } else {
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('theme', 'light');
+    }
+}
+
+// ตรวจสอบค่าที่ผู้ใช้เคยเลือกไว้ล่าสุด (จำสถานะโหมด)
+window.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || !savedTheme) { 
+        document.body.classList.add('dark-mode');
+        document.getElementById('themeToggle').checked = true;
+    }
+});
     </script>
 </body>
 </html>
