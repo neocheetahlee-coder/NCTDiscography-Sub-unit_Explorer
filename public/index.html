@@ -157,9 +157,12 @@
 
     <header>
         <h1>NCT Discography</h1>
-        <div class="controls">
+       <div class="controls">
             <!-- ระบบค้นหา (ใช้ลอจิก Hash Table ฝั่ง Backend) -->
-            <input type="text" id="searchInput" placeholder="Search song, album, unit..." oninput="debounceSearch()">
+            <div class="search-wrapper" style="position: relative; display: inline-flex; align-items: center;">
+                <input type="text" id="searchInput" placeholder="Search song, album, unit..." oninput="debounceSearch()">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            </div>
             
             <!-- ระบบ Sorting (ใช้ลอจิกเรียงข้อมูลฝั่ง Backend) -->
             <select id="sortSelect" onchange="fetchData()">
@@ -168,11 +171,15 @@
                 <option value="az"> Name : A - Z</option>
                 <option value="za"> Name : Z - A</option>
             </select>
+
+            <!-- ระบบ Toggle Switch (Dark Mode) -->
             <div class="theme-switch-wrapper" style="display: inline-flex; align-items: center; margin-left: 15px;">
-            <label class="theme-switch" style="position: relative; display: inline-block; width: 56px; height: 28px;">
-                <input type="checkbox" id="themeToggle" onchange="toggleTheme()" style="opacity: 0; width: 0; height: 0;">
-                <span class="slider" style="cursor: pointer; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
-            </label>
+                <label class="theme-switch" style="position: relative; display: inline-block; width: 56px; height: 28px;">
+                    <input type="checkbox" id="themeToggle" onchange="toggleTheme()" style="opacity: 0; width: 0; height: 0;">
+                    <span class="slider" style="cursor: pointer; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
+                </label>
+            </div>
+</div>
         </div>
         </div>
     </header>
