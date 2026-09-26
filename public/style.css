@@ -159,7 +159,7 @@ input[type="text"], input[type="search"], .search-input {
     font-family: 'Geist Mono', monospace !important;
 }
 /* ================== กำหนดให้ปุ่ม Tab ทั้งหมด (All Unit, NCT 127, ฯลฯ) ใช้ฟ้อนต์ Geist Mono==================*/
-.tab-btn, #sortSelect, select, input[type="text"], input[type="search"], .search-input {
+.tab-btn, #sortSelect, select, input[type="text"], input[type="search"], .search-input, .track-count {
     font-family: 'Geist Mono', monospace !important;
 }
 
